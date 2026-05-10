@@ -265,6 +265,11 @@ EMNLP2026_PLAN.md
 DESIGN.md
 scientific-visualization-figure-design-1/
 
+# Qualtrics survey export files and internal operational markdown
+*.qsf
+scripts/human_validation/LAUNCH_CHECKLIST.md
+scripts/human_validation/study_materials.md
+
 # Scratch / one-off test scripts
 sglang_test.py
 test_reasoning_extraction.py

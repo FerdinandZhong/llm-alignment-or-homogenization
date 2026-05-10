@@ -1,0 +1,81 @@
+D_INTERVIEW,gender,age,place_of_residence,continent_of_residence,immigration_status,highest_level_of_education,socioeconomic_status,occupation_group,_prism_conversation_id,_prism_user_id,_prism_topic
+900000001,Male,29,Israel,Asia,not immigrant,University undergraduate level,Middle class,Unemployed,c5457,user1021,career
+900000002,Female,49,United States,Americas,immigrant,Upper secondary education,Middle class,Skilled worker,c5368,user1008,career
+900000003,Male,21,Norway,Europe,not immigrant,Upper secondary education,Middle class,Unemployed,c389,user77,career
+900000004,Male,29,Netherlands,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c1452,user283,career
+900000005,Male,70,United States,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c7472,user1432,career
+900000006,Male,29,Denmark,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c900,user165,career
+900000007,Male,21,Sweden,Europe,not immigrant,Upper secondary education,Middle class,Unemployed,c1464,user265,career
+900000008,Male,29,United States,Americas,immigrant,University undergraduate level,Middle class,Skilled worker,c2493,user469,career
+900000009,Non-binary / third gender,21,Australia,Oceania,immigrant,Upper secondary education,Middle class,Skilled worker,c3457,user639,career
+900000010,Male,39,United States,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c3747,user701,career
+900000011,Male,21,United Kingdom,Europe,not immigrant,University undergraduate level,Middle class,Skilled worker,c4220,user777,career
+900000012,Male,39,Denmark,Europe,not immigrant,Upper secondary education,Middle class,Retired,c399,user73,career
+900000013,Female,29,Israel,Asia,not immigrant,Upper secondary education,Middle class,Skilled worker,c2448,user468,career
+900000014,Female,21,United Kingdom,Europe,immigrant,University undergraduate level,Middle class,Unemployed,c3069,user561,career
+900000015,Male,49,New Zealand,Oceania,not immigrant,University undergraduate level,Middle class,Skilled worker,c3466,user638,career
+900000016,Male,29,United States,Americas,not immigrant,University undergraduate level,Middle class,Unemployed,c3579,user668,career
+900000017,Female,29,United States,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c4375,user799,career
+900000018,Male,49,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c5337,user983,career
+900000019,Female,39,Canada,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c5501,user1029,career
+900000020,Male,39,United Kingdom,Europe,immigrant,University undergraduate level,Middle class,Skilled worker,c6358,user1181,career
+900000021,Female,39,Luxembourg,Europe,immigrant,Upper secondary education,Middle class,Skilled worker,c93,user29,career
+900000022,Male,29,Chile,Americas,not immigrant,Upper secondary education,Middle class,Unemployed,c658,user134,career
+900000023,Male,21,Australia,Oceania,not immigrant,Upper secondary education,Middle class,Student,c2027,user377,career
+900000024,Male,39,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c3079,user562,career
+900000025,Female,59,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c4238,user767,career
+900000026,Male,29,United Kingdom,Europe,not immigrant,University undergraduate level,Middle class,Skilled worker,c4643,user841,career
+900000027,Male,39,Canada,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c5565,user1040,career
+900000028,Female,49,Australia,Oceania,not immigrant,Upper secondary education,Middle class,Skilled worker,c5877,user1098,career
+900000029,Female,21,"Korea, Republic of",Asia,not immigrant,Upper secondary education,Middle class,Student,c6047,user1123,career
+900000030,Male,39,United States,Americas,immigrant,Upper secondary education,Middle class,Skilled worker,c7184,user1331,career
+900000031,Female,39,Spain,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c553,user107,career
+900000032,Female,39,Finland,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c629,user106,career
+900000033,Male,29,Chile,Americas,not immigrant,University undergraduate level,Middle class,Student,c871,user146,career
+900000034,Female,21,South Africa,Africa,not immigrant,University undergraduate level,Middle class,Skilled worker,c1104,user214,career
+900000035,Male,29,Austria,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c1341,user241,career
+900000036,Male,21,United States,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c3814,user704,career
+900000037,Non-binary / third gender,29,United States,Americas,not immigrant,University undergraduate level,Middle class,Unemployed,c3877,user718,career
+900000038,Male,39,United States,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c4491,user826,career
+900000039,Female,29,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c4510,user836,career
+900000040,Male,29,United States,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c4541,user819,career
+900000041,Female,21,United States,Americas,immigrant,University undergraduate level,Middle class,Skilled worker,c4695,user856,career
+900000042,Male,29,Israel,Asia,not immigrant,University undergraduate level,Middle class,Skilled worker,c5452,user1019,career
+900000043,Female,29,Israel,Asia,not immigrant,University undergraduate level,Middle class,Skilled worker,c6132,user1131,career
+900000044,Male,29,United States,Americas,not immigrant,University undergraduate level,Middle class,Unemployed,c6813,user1267,career
+900000045,Male,29,Belgium,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c254,user62,career
+900000046,Male,21,Chile,Americas,not immigrant,Upper secondary education,Middle class,Student,c612,user121,career
+900000047,Male,21,South Africa,Africa,not immigrant,University undergraduate level,Middle class,Student,c1028,user193,career
+900000048,Female,29,South Africa,Africa,not immigrant,University undergraduate level,Middle class,Skilled worker,c1208,user226,career
+900000049,Female,21,Estonia,Europe,not immigrant,University undergraduate level,Middle class,Skilled worker,c1390,user253,career
+900000050,Male,39,Mexico,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c1698,user1024,career
+900000051,Male,21,New Zealand,Oceania,immigrant,Upper secondary education,Middle class,Unemployed,c1870,user357,career
+900000052,Male,21,Australia,Oceania,not immigrant,Upper secondary education,Middle class,Skilled worker,c1889,user356,career
+900000053,Female,29,Switzerland,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c2328,user433,career
+900000054,Female,29,Chile,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c2617,user482,career
+900000055,Female,59,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Retired,c4198,user772,career
+900000056,Male,39,United States,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c4388,user805,investment
+900000057,Male,21,Denmark,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c450,user95,investment
+900000058,Male,29,France,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c1544,user282,investment
+900000059,Male,39,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c3082,user569,investment
+900000060,Male,39,United Kingdom,Europe,immigrant,Upper secondary education,Middle class,Skilled worker,c5052,user947,investment
+900000061,Male,39,Canada,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c1,user1,investment
+900000062,Male,29,Germany,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c1511,user293,investment
+900000063,Female,49,Australia,Oceania,not immigrant,University undergraduate level,Middle class,Skilled worker,c2071,user383,investment
+900000064,Male,59,United States,Americas,not immigrant,Upper secondary education,Middle class,Retired,c7810,user1472,investment
+900000065,Male,29,Austria,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c1301,user241,investment
+900000066,Female,21,New Zealand,Oceania,not immigrant,Upper secondary education,Middle class,Student,c2159,user402,investment
+900000067,Female,70,Israel,Asia,immigrant,Upper secondary education,Middle class,Skilled worker,c2195,user407,investment
+900000068,Female,59,Australia,Oceania,not immigrant,Upper secondary education,Middle class,Skilled worker,c2813,user527,investment
+900000069,Female,21,New Zealand,Oceania,not immigrant,Upper secondary education,Middle class,Student,c2832,user532,investment
+900000070,Female,39,New Zealand,Oceania,not immigrant,University undergraduate level,Middle class,Skilled worker,c2939,user543,investment
+900000071,Female,49,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Skilled worker,c3140,user574,investment
+900000072,Male,49,United Kingdom,Europe,not immigrant,Upper secondary education,Middle class,Unemployed,c3149,user584,investment
+900000073,Male,29,United States,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c5334,user997,investment
+900000074,Male,59,United Kingdom,Europe,not immigrant,University undergraduate level,Middle class,Skilled worker,c6909,user1263,investment
+900000075,Male,39,Canada,Americas,not immigrant,Upper secondary education,Middle class,Skilled worker,c1830,user341,investment
+900000076,Female,29,Chile,Americas,not immigrant,University undergraduate level,Middle class,Skilled worker,c2422,user464,investment
+900000077,Female,29,Israel,Asia,immigrant,University undergraduate level,Middle class,Skilled worker,c2645,user489,investment
+900000078,Male,29,New Zealand,Oceania,not immigrant,University undergraduate level,Middle class,Skilled worker,c2774,user510,investment
+900000079,Male,39,Denmark,Europe,not immigrant,University undergraduate level,Middle class,Unemployed,c2973,user551,investment
+900000080,Male,29,Israel,Asia,not immigrant,University undergraduate level,Middle class,Unemployed,c4072,user750,investment

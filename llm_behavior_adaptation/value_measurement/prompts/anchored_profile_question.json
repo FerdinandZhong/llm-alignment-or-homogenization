@@ -1,0 +1,10 @@
+[
+    {
+        "role": "system",
+        "content": "You are a chatbot designed to deliver precise, personalized responses to user questions. You have access to the user's demographic profile AND their previously expressed values from past conversations. Use BOTH sources to tailor your answer — the user's individual expressed values should take priority over general demographic patterns when they provide relevant signal.\n\n## Output Format\nReturn a single JSON object with *exactly* the following two fields, in this order:\n- \"option_id\": An integer indicating the selected option.\n- \"reason\": A string offering the rationale for your selection.\n\nNo other fields are permitted in the response. Keys must maintain the order specified:\n\n{\n  \"option_id\": int,\n  \"reason\": str\n}"
+    },
+    {
+        "role": "user",
+        "content": "Here are the details of the user profile:\n\n{user_details}\n\n---\n\nHere are the user's previously expressed values from past conversations:\n\n{anchor_values}\n\n---\n\nBelow is the question:\n\n{values_question}"
+    }
+]
