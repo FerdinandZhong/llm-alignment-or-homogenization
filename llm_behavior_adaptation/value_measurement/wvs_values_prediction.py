@@ -59,7 +59,8 @@ class ValuesPredictionController:
         run_mode: str = "both",
         extra_body: Dict = None,
         translated_questions: Optional[Dict] = None,
-        uid_to_language: Optional[Dict[str, str]] = None,
+        uid_language_map: Optional[Dict] = None,
+        **kwargs,
     ) -> None:
         """
         Initialize the ValuesPredictionController.
@@ -97,8 +98,8 @@ class ValuesPredictionController:
             raise TypeError("picked_questions must be a Dict.")
         if not isinstance(verbose, int) or verbose < 0:
             raise ValueError("verbose must be a non-negative integer.")
-        if run_mode not in {"profiles", "dialogue", "both"}:
-            raise ValueError("run_mode must be one of {'profiles','dialogue','both'}.")
+        if run_mode not in {"profiles", "dialogue", "both", "no_profile", "anchored"}:
+            raise ValueError("run_mode must be one of {'profiles','dialogue','both','no_profile','anchored'}.")
 
         self.prompts = load_json_folder(prompts_folder)
 
@@ -107,17 +108,18 @@ class ValuesPredictionController:
         self._user_profile_dataset = user_profile_dataset
         self._direct_output_file_path = direct_output_file_path
         self._dialogue_output_file_path = dialogue_output_file_path
+        self._no_profile_output_file_path = kwargs.get("no_profile_output_file_path")
+        self._anchored_output_file_path = kwargs.get("anchored_output_file_path")
+        self._human_values_path = kwargs.get("human_values_path")
+        self._anchor_fold_count = kwargs.get("anchor_fold_count", 5)
         self._generated_dialogues = generated_dialogues
         self._picked_questions = picked_questions
         self._verbose = verbose
         self._storage_step = storage_step
         self._reasoning = reasoning
         self._run_mode = run_mode
-        # Optional: per-language translated questions and instruction
-        # {language: {qid: translated_text, "_instruction": translated_instruction}}
-        self._translated_questions: Dict = translated_questions or {}
-        # {uid: target_language}
-        self._uid_to_language: Dict[str, str] = uid_to_language or {}
+        self._translated_questions = translated_questions  # {lang: {qid: text, "_instruction": text}}
+        self._uid_language_map = uid_language_map  # {uid: language}
 
         print(f"reasoning: {reasoning}")
 
@@ -132,35 +134,24 @@ class ValuesPredictionController:
             self._openai_client = openai_client
 
         # --- query function wiring ---
+        # Many OpenRouter providers don't support json_schema structured outputs.
+        # Use json_object (widely supported) for standard models, and no
+        # response_format for reasoning models (some providers reject all JSON modes).
+        common_kwargs = {"model": self.evaluated_model}
+        if not reasoning:
+            common_kwargs["response_format"] = {"type": "json_object"}
+
         if llm_server == "llm_platform":
             self.query_llm = partial(
                 self.openai_client.chat.completions.create,
-                model=self.evaluated_model,
-                response_format=(
-                    {
-                        "type": "json_schema",
-                        "json_schema": {
-                            "name": "option_response",
-                            "schema": Response.model_json_schema(),  # noqa: F821
-                        },
-                    }
-                ),
+                **common_kwargs,
                 extra_body=extra_body,
             )
         else:
             self.query_llm = partial(
                 self.openai_client.chat.completions.create,
-                model=self.evaluated_model,
-                response_format=(
-                    {
-                        "type": "json_schema",
-                        "json_schema": {
-                            "name": "option_response",
-                            "schema": Response.model_json_schema(),  # noqa: F821
-                        },
-                    }
-                ),
-                **extra_body,
+                **common_kwargs,
+                **(extra_body or {}),
             )
         self.llm_server = llm_server
 
@@ -340,42 +331,40 @@ class ValuesPredictionController:
             picked_questions = json.load(question_file)
 
         # -------- OpenAI / backend client --------
-        api_key = cfg.get("openai_api_key") or os.environ.get("api_key") or os.environ.get("OPENAI_API_KEY")
+        api_key = cfg.get("openai_api_key") or os.environ.get("api_key") or os.environ.get("OPENAI_API_KEY") or os.environ.get("HF_TOKEN")
         if not api_key:
-            raise RuntimeError("Missing OpenAI API key (YAML 'openai_api_key' or env 'api_key'/'OPENAI_API_KEY').")
+            raise RuntimeError("Missing OpenAI API key (YAML 'openai_api_key' or env 'api_key'/'OPENAI_API_KEY'/'HF_TOKEN').")
 
         evaluated_model = cfg["evaluated_model"]
         llm_server = cfg.get("llm_server", "llm_platform")
 
         # Preserve your previous heuristic for base_url selection
-        if "gpt" in evaluated_model and "oss" not in evaluated_model:
+        # Priority: explicit model_base_url > env base_url > GPT default > localhost
+        base_url = cfg.get("model_base_url") or os.environ.get("base_url")
+        if base_url:
+            openai_client = AsyncOpenAI(api_key=api_key, base_url=base_url)
+        elif "gpt" in evaluated_model and "oss" not in evaluated_model:
             openai_client = AsyncOpenAI(api_key=api_key)
         else:
-            base_url = cfg.get("model_base_url") or os.environ.get("base_url") or "http://localhost:8000/v1"
-            openai_client = AsyncOpenAI(api_key=api_key, base_url=base_url)
+            openai_client = AsyncOpenAI(api_key=api_key, base_url="http://localhost:8000/v1")
 
-        # -------- Optional: translated questions --------
+        # -------- Translated questions (optional) --------
         translated_questions = None
         if cfg.get("translated_questions_path"):
             with open(cfg["translated_questions_path"], "r", encoding="utf-8") as f:
                 translated_questions = json.load(f)
             logger.info("Loaded translated questions for %d languages", len(translated_questions))
 
-        # -------- Optional: uid → language map (from translated dialogues JSONL) --------
-        uid_to_language = None
+        # -------- UID → language map (optional) --------
+        uid_language_map = None
         if cfg.get("uid_language_map_file"):
-            uid_to_language = {}
+            uid_language_map = {}
             with open(cfg["uid_language_map_file"], "r", encoding="utf-8") as f:
                 for line in f:
-                    line = line.strip()
-                    if not line:
-                        continue
                     entry = json.loads(line)
-                    uid = str(entry.get("user_profile", {}).get("D_INTERVIEW", ""))
-                    lang = entry.get("target_language", "")
-                    if uid and lang:
-                        uid_to_language[uid] = lang
-            logger.info("Loaded language map for %d users", len(uid_to_language))
+                    uid = str(entry["user_profile"]["D_INTERVIEW"])
+                    uid_language_map[uid] = entry["target_language"]
+            logger.info("Built uid→language map for %d users", len(uid_language_map))
 
         # -------- Instantiate controller --------
         return cls(
@@ -394,7 +383,11 @@ class ValuesPredictionController:
             run_mode=(cfg.get("run_mode") or "both"),
             extra_body=(cfg.get("extra_body") or None),
             translated_questions=translated_questions,
-            uid_to_language=uid_to_language,
+            uid_language_map=uid_language_map,
+            no_profile_output_file_path=cfg.get("no_profile_output_file_path"),
+            anchored_output_file_path=cfg.get("anchored_output_file_path"),
+            human_values_path=cfg.get("human_values_path"),
+            anchor_fold_count=int(cfg.get("anchor_fold_count", 5) or 5),
         )
 
     # ---------- Orchestration ----------
@@ -406,11 +399,17 @@ class ValuesPredictionController:
         - 'profiles': run profile-only pass
         - 'dialogue': run dialogue-context pass
         - 'both': run profiles first, then dialogue
+        - 'no_profile': run without any demographic information
+        - 'anchored': run profile + individual value anchors (5-fold CV)
         """
         if self._run_mode == "profiles":
             await self.get_values_for_user_profiles()
         elif self._run_mode == "dialogue":
             await self.get_values_for_dialogue()
+        elif self._run_mode == "no_profile":
+            await self.get_values_no_profile()
+        elif self._run_mode == "anchored":
+            await self.get_values_for_anchored_profiles()
         else:  # both
             await self.get_values_for_user_profiles()
             await self.get_values_for_dialogue()
@@ -434,7 +433,21 @@ class ValuesPredictionController:
             else:
                 full_chat_response = await self.query_llm(messages=full_messages)
             content = full_chat_response.choices[0].message.content
-            json_output = json.loads(content)
+            try:
+                json_output = json.loads(content)
+            except json.JSONDecodeError:
+                # Sanitize invalid JSON escape sequences (e.g. \e, \a from smaller models)
+                import re
+
+                sanitized = re.sub(r'\\(?!["\\/bfnrtu])', r"\\\\", content)
+                try:
+                    json_output = json.loads(sanitized)
+                except json.JSONDecodeError:
+                    logger.warning("JSON still invalid after sanitization: %s", content[:200])
+                    return (
+                        -1,
+                        "Response JSON un-parseable",
+                    )
         except UnicodeDecodeError:
             logger.warning("Error decoding as json: %s", content)
             return (
@@ -448,10 +461,12 @@ class ValuesPredictionController:
             reason_for_selection = json_output.get("reason", "")
 
             if reasoning:
-                if self.llm_server == "llm_platform":
-                    reasoning_content = full_chat_response.choices[0].message.reasoning
-                else:
-                    reasoning_content = full_chat_response.choices[0].message.reasoning_content
+                msg = full_chat_response.choices[0].message
+                reasoning_content = (
+                    getattr(msg, "reasoning", None)
+                    or getattr(msg, "reasoning_content", None)
+                    or ""
+                )
                 reason_for_selection = f"reasoning:{reasoning_content}\n\n{reason_for_selection}"
 
         except KeyError:
@@ -484,15 +499,13 @@ class ValuesPredictionController:
 
         return {question_id: structured_output}
 
-    async def _dialogue_continue_value_query(
-        self, question_id, dialogue_history, full_question, target_language: str = None
-    ):
-        """
+    async def _dialogue_continue_value_query(self, question_id, dialogue_history, full_question, instruction=None):
+        r"""
         Query the LLM to answer a values question using prior dialogue context.
 
-        If *target_language* is provided and translated questions are available,
-        both the question text and the instruction are substituted with their
-        translated versions so the entire final turn matches the dialogue language.
+        If ``instruction`` is provided (a translated version of the user-turn prefix),
+        the final user message is built as ``"{instruction}\\n\\n{full_question}"``
+        instead of using the English template from dialogue_followup.json.
         """
         dialogue_continue_prompt = self._prompt("dialogue_followup")
         dialogue_based_msgs = deepcopy(dialogue_history)
@@ -500,26 +513,12 @@ class ValuesPredictionController:
             {**m, "role": "assistant"} if m.get("role") == "chatbot" else m for m in dialogue_based_msgs
         ]
         dialogue_based_msgs.append(dialogue_continue_prompt[0])
-
-        # Resolve translated question and instruction if available
-        if target_language and target_language != "English" and self._translated_questions.get(target_language):
-            lang_translations = self._translated_questions[target_language]
-            translated_q = lang_translations.get(question_id, full_question)
-            translated_instruction = lang_translations.get(
-                "_instruction",
-                "Assume you are me, help me find the most suitable answer to the following question:",
-            )
-            user_content = dialogue_continue_prompt[1]["content"].replace(
-                "Assume you are me, help me find the most suitable answer to the following question:\n\n{values_question}",
-                f"{translated_instruction}\n\n{{values_question}}",
-            )
-            dialogue_continue_prompt[1]["content"] = user_content.format(values_question=translated_q)
+        user_msg = deepcopy(dialogue_continue_prompt[1])
+        if instruction is not None:
+            user_msg["content"] = f"{instruction}\n\n{full_question}"
         else:
-            dialogue_continue_prompt[1]["content"] = dialogue_continue_prompt[1]["content"].format(
-                values_question=full_question
-            )
-
-        dialogue_based_msgs.append(dialogue_continue_prompt[1])
+            user_msg["content"] = user_msg["content"].format(values_question=full_question)
+        dialogue_based_msgs.append(user_msg)
 
         structured_output = await self._retry_llm(
             lambda: self._llm_output_processing(full_messages=dialogue_based_msgs, reasoning=self.reasoning),
@@ -528,6 +527,193 @@ class ValuesPredictionController:
         )
 
         return {question_id: structured_output}
+
+    async def _no_profile_value_query(self, question_id, full_question):
+        """Query the LLM to answer a values question with no demographic context."""
+        no_profile_prompt = self._prompt("no_profile_question")
+        no_profile_prompt[1]["content"] = no_profile_prompt[1]["content"].format(
+            values_question=full_question
+        )
+
+        structured_output = await self._retry_llm(
+            lambda: self._llm_output_processing(full_messages=no_profile_prompt, reasoning=self.reasoning),
+            max_attempts=3,
+            base_delay=1.0,
+        )
+        return {question_id: structured_output}
+
+    async def _anchored_value_query(self, question_id, user_profile, anchor_context, full_question):
+        """Query the LLM with a user profile plus individual value anchors."""
+        anchored_prompt = self._prompt("anchored_profile_question")
+        anchored_prompt[1]["content"] = anchored_prompt[1]["content"].format(
+            user_details=user_profile,
+            anchor_values=anchor_context,
+            values_question=full_question,
+        )
+
+        structured_output = await self._retry_llm(
+            lambda: self._llm_output_processing(full_messages=anchored_prompt, reasoning=self.reasoning),
+            max_attempts=3,
+            base_delay=1.0,
+        )
+        return {question_id: structured_output}
+
+    async def get_values_no_profile(self):
+        """
+        Generate values predictions without any demographic context (control condition).
+        Uses the same user iteration to maintain output structure alignment.
+        """
+        output_path = self._no_profile_output_file_path
+        if not output_path:
+            raise ValueError("no_profile_output_file_path must be set for no_profile mode.")
+
+        list_user_selections = []
+        try:
+            with tqdm(
+                total=len(self.user_profile_dataset),
+                desc="Generating no-profile values",
+                unit="user",
+            ) as pbar:
+                for index, row in self.user_profile_dataset.iterrows():
+                    row_dict = row.to_dict()
+                    one_user_selections = {}
+                    user_id = row_dict["D_INTERVIEW"]
+
+                    for question_category, question_dict in self.picked_questions.items():
+                        list_kwargs = []
+                        for question_id, question_details in question_dict.items():
+                            list_kwargs.append({
+                                "question_id": question_id,
+                                "full_question": question_details["question"],
+                            })
+
+                        one_user_one_category_selections = await asyncio.gather(
+                            *[self._no_profile_value_query(**kwargs) for kwargs in list_kwargs]
+                        )
+                        one_user_selections[question_category] = one_user_one_category_selections
+
+                    list_user_selections.append({user_id: one_user_selections})
+
+                    if self._storage_step and (index + 1) % self._storage_step == 0:
+                        self.append_to_file(list_user_selections, output_path)
+                        list_user_selections.clear()
+
+                    pbar.update(1)
+
+                if list_user_selections:
+                    self.append_to_file(list_user_selections, output_path)
+
+        except Exception as e:
+            logger.error("Error in no-profile value selection: %s", str(e))
+            raise
+
+    async def get_values_for_anchored_profiles(self):
+        """
+        Generate values predictions with profile + individual value anchors.
+        Implements K-fold cross-validation: for each fold, use a subset of the
+        user's actual human WVS answers as 'memory anchors' and predict the rest.
+        """
+        output_path = self._anchored_output_file_path
+        if not output_path:
+            raise ValueError("anchored_output_file_path must be set for anchored mode.")
+        if not self._human_values_path:
+            raise ValueError("human_values_path must be set for anchored mode.")
+
+        human_values_df = pd.read_csv(self._human_values_path)
+        human_values_df = human_values_df.loc[:, ~human_values_df.columns.str.contains("^Unnamed")]
+
+        all_question_ids = []
+        question_text_map = {}
+        for _cat, q_dict in self.picked_questions.items():
+            for qid, qdetails in q_dict.items():
+                all_question_ids.append(qid)
+                question_text_map[qid] = qdetails["question"]
+
+        n_folds = self._anchor_fold_count
+        random.seed(42)
+        shuffled_qids = list(all_question_ids)
+        random.shuffle(shuffled_qids)
+        fold_size = len(shuffled_qids) // n_folds
+        folds = [shuffled_qids[i * fold_size:(i + 1) * fold_size] for i in range(n_folds)]
+        remainder = shuffled_qids[n_folds * fold_size:]
+        for i, qid in enumerate(remainder):
+            folds[i % n_folds].append(qid)
+
+        list_user_selections = []
+        try:
+            with tqdm(
+                total=len(self.user_profile_dataset),
+                desc="Generating anchored values",
+                unit="user",
+            ) as pbar:
+                for index, row in self.user_profile_dataset.iterrows():
+                    row_dict = row.to_dict()
+                    user_id = row_dict["D_INTERVIEW"]
+                    user_profile = render_json(retrieve_user_profile_wvs(row_dict))
+
+                    human_row = human_values_df[human_values_df["D_INTERVIEW"] == user_id]
+                    if human_row.empty:
+                        logger.warning("No human values for user %s, skipping", user_id)
+                        pbar.update(1)
+                        continue
+
+                    all_fold_results = {}
+
+                    for fold_idx, anchor_qids in enumerate(folds):
+                        predict_qids = [q for q in all_question_ids if q not in anchor_qids]
+
+                        anchor_lines = []
+                        for aq in anchor_qids:
+                            human_answer = human_row.iloc[0].get(aq)
+                            if pd.notna(human_answer):
+                                anchor_lines.append(
+                                    f"Q: {question_text_map[aq]}\nA: Option {int(human_answer)}"
+                                )
+                        anchor_context = "\n\n".join(anchor_lines)
+
+                        list_kwargs = []
+                        for qid in predict_qids:
+                            list_kwargs.append({
+                                "question_id": qid,
+                                "user_profile": user_profile,
+                                "anchor_context": anchor_context,
+                                "full_question": question_text_map[qid],
+                            })
+
+                        fold_selections = await asyncio.gather(
+                            *[self._anchored_value_query(**kwargs) for kwargs in list_kwargs]
+                        )
+
+                        for sel in fold_selections:
+                            all_fold_results.update(sel)
+
+                    grouped_results = {}
+                    for cat, q_dict in self.picked_questions.items():
+                        cat_results = []
+                        for qid in q_dict:
+                            if qid in all_fold_results:
+                                cat_results.append({qid: all_fold_results[qid]})
+                        grouped_results[cat] = cat_results
+
+                    list_user_selections.append({
+                        user_id: {
+                            "fold_count": n_folds,
+                            "results": grouped_results,
+                        }
+                    })
+
+                    if self._storage_step and (index + 1) % self._storage_step == 0:
+                        self.append_to_file(list_user_selections, output_path)
+                        list_user_selections.clear()
+
+                    pbar.update(1)
+
+                if list_user_selections:
+                    self.append_to_file(list_user_selections, output_path)
+
+        except Exception as e:
+            logger.error("Error in anchored value selection: %s", str(e))
+            raise
 
     async def get_values_for_user_profiles(self):
         """
@@ -626,23 +812,30 @@ class ValuesPredictionController:
                     if self._verbose == 1:
                         logger.info("Processing row %s: %s", index, row_dict)
 
+                    # Resolve per-user language and its translations (if available)
+                    user_language = self._uid_language_map.get(user_id) if self._uid_language_map else None
+                    lang_translations = (
+                        self._translated_questions.get(user_language, {})
+                        if (self._translated_questions and user_language)
+                        else {}
+                    )
+                    translated_instruction = lang_translations.get("_instruction") or None
+
                     for (
                         question_category,
                         question_dict,
                     ) in self.picked_questions.items():
                         one_user_selections[question_category] = {}
                         list_kwargs = []
-                        target_language = self._uid_to_language.get(user_id)
-
                         for question_id, question_details in question_dict.items():
-                            full_question = question_details["question"]
+                            full_question = lang_translations.get(question_id) or question_details["question"]
 
                             list_kwargs.append(
                                 {
                                     "question_id": question_id,
                                     "dialogue_history": user_dialogue,
                                     "full_question": full_question,
-                                    "target_language": target_language,
+                                    "instruction": translated_instruction,
                                 }
                             )
 
@@ -683,7 +876,10 @@ class ValuesPredictionController:
         """Append data to the specified JSONL file."""
         with open(output_file_path, "a", encoding="utf-8") as jsonl_file:
             for entry in data:
-                jsonl_file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                # Sanitize surrogate characters that smaller models produce in multilingual output
+                line = json.dumps(entry, ensure_ascii=False)
+                line = line.encode("utf-8", errors="surrogatepass").decode("utf-8", errors="replace")
+                jsonl_file.write(line + "\n")
 
 
 async def main():
