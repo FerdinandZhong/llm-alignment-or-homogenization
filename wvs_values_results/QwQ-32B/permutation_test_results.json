@@ -1,0 +1,109 @@
+{
+  "config": {
+    "num_permutations": 10000,
+    "seed": 42,
+    "n_users": 1000,
+    "n_questions": 55,
+    "ba_user_path": "wvs_values_results/QwQ-32B/BA_user_values_results/total_1000.jsonl"
+  },
+  "results": {
+    "age": {
+      "real_homogenization_rate": 0.637,
+      "null_mean": 0.5915,
+      "null_std": 0.0096,
+      "null_min": 0.552,
+      "null_max": 0.63,
+      "null_percentile_95": 0.607,
+      "null_percentile_99": 0.614,
+      "p_value": 0.0001,
+      "effect_size_z": 4.73,
+      "demographic_effect": 0.0455,
+      "n_valid_users": 1000,
+      "n_groups": 5,
+      "interpretation": "significant"
+    },
+    "continent_of_residence": {
+      "real_homogenization_rate": 0.595,
+      "null_mean": 0.4899,
+      "null_std": 0.0106,
+      "null_min": 0.45,
+      "null_max": 0.531,
+      "null_percentile_95": 0.507,
+      "null_percentile_99": 0.515,
+      "p_value": 0.0001,
+      "effect_size_z": 9.88,
+      "demographic_effect": 0.1051,
+      "n_valid_users": 1000,
+      "n_groups": 6,
+      "interpretation": "significant"
+    },
+    "immigration_status": {
+      "real_homogenization_rate": 0.675,
+      "null_mean": 0.6527,
+      "null_std": 0.0091,
+      "null_min": 0.6138,
+      "null_max": 0.6851,
+      "null_percentile_95": 0.668,
+      "null_percentile_99": 0.674,
+      "p_value": 0.008799,
+      "effect_size_z": 2.44,
+      "demographic_effect": 0.0223,
+      "n_valid_users": 997,
+      "n_groups": 2,
+      "interpretation": "significant"
+    },
+    "highest_level_of_education": {
+      "real_homogenization_rate": 0.703,
+      "null_mean": 0.5577,
+      "null_std": 0.0107,
+      "null_min": 0.517,
+      "null_max": 0.596,
+      "null_percentile_95": 0.575,
+      "null_percentile_99": 0.583,
+      "p_value": 0.0001,
+      "effect_size_z": 13.55,
+      "demographic_effect": 0.1453,
+      "n_valid_users": 1000,
+      "n_groups": 5,
+      "interpretation": "significant"
+    },
+    "socioeconomic_status": {
+      "real_homogenization_rate": 0.7131,
+      "null_mean": 0.6289,
+      "null_std": 0.0103,
+      "null_min": 0.5916,
+      "null_max": 0.6691,
+      "null_percentile_95": 0.6461,
+      "null_percentile_99": 0.6534,
+      "p_value": 0.0001,
+      "effect_size_z": 8.18,
+      "demographic_effect": 0.0842,
+      "n_valid_users": 955,
+      "n_groups": 5,
+      "interpretation": "significant"
+    },
+    "occupation_group": {
+      "real_homogenization_rate": 0.6908,
+      "null_mean": 0.5881,
+      "null_std": 0.0106,
+      "null_min": 0.5437,
+      "null_max": 0.6247,
+      "null_percentile_95": 0.6055,
+      "null_percentile_99": 0.613,
+      "p_value": 0.0001,
+      "effect_size_z": 9.73,
+      "demographic_effect": 0.1027,
+      "n_valid_users": 938,
+      "n_groups": 6,
+      "interpretation": "significant"
+    }
+  },
+  "summary": {
+    "all_significant": true,
+    "mean_demographic_effect": 0.0842,
+    "max_demographic_effect": 0.1453,
+    "min_demographic_effect": 0.0223,
+    "min_p_value": 0.0001,
+    "max_p_value": 0.008799
+  }
+}

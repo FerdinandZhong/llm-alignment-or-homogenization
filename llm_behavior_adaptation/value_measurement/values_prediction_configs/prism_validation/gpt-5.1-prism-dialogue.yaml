@@ -1,0 +1,16 @@
+# PRISM validation: BA_dialogue on real human conversations - GPT-5.1
+user_profile_dataset_path: "datasets/prism_validation/prism_demographics.csv"
+dialogue_file: "datasets/prism_validation/prism_dialogues.jsonl"
+picked_questions_path: "datasets/wvs_benchmarks/picked_questions.json"
+evaluated_model: azure/cloudops-gpt-5.1
+direct_output_file_path: wvs_values_results/prism_validation/gpt-5.1/BA_user_values_results/total_80.jsonl
+dialogue_output_file_path: wvs_values_results/prism_validation/gpt-5.1/BA_dialogue_values_results/total_80.jsonl
+prompts_folder: llm_behavior_adaptation/value_measurement/prompts
+starting_row: 0
+ending_row: 80
+llm_server: llm_platform
+verbose: 1
+storage_step: 10
+reasoning: false
+model_base_url: https://ai-gateway.dev.cloudops.cloudera.com
+run_mode: both
