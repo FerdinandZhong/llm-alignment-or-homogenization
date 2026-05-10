@@ -188,11 +188,23 @@ datasets/wvs_generated_dialogues/**
 # Allow values prediction configs
 !llm_behavior_adaptation/value_measurement/values_prediction_configs/**
 
-# WVS values results - only keep total_1000.jsonl and experiments_results.json
+# WVS values results - keep only small summary files; host full JSONL on Zenodo/HuggingFace
+# BA_none total_1000.jsonl files are small (0.5-1.3 MB) and needed for BA_none analysis
+# BA_user/BA_anchored/BA_dialogue total_1000.jsonl can be up to 168 MB (QwQ-32B) - host externally
 wvs_values_results/*
 !wvs_values_results/**/
-!wvs_values_results/**/total_1000.jsonl
-!wvs_values_results/**/experiments_results.json
+!wvs_values_results/ba_none_vaa_comparison.json
+!wvs_values_results/**/permutation_test_results.json
+!wvs_values_results/**/BA_none_values_results/
+!wvs_values_results/**/BA_none_values_results/total_1000.jsonl
+# experiments_results.json for gpt-5.1 is 89 MB - tracked by LFS (see .gitattributes)
+# All other models' experiments_results.json are ~200 KB and committed as regular git objects
+# Large inference outputs tracked by Git LFS (see .gitattributes):
+#   BA_user, BA_anchored, BA_dialogue, BA_translated_dialogue total_1000.jsonl
+#   wvs_values_results/gpt-5.1/experiments_results.json
+# career/ and investment/ subdirs contain dialogue results already tracked above via LFS
+# PRISM validation model outputs - no LFS tracking needed, exclude entirely
+wvs_values_results/prism_validation/
 
 vsm_images/**/**2.json
 values_results/**/**2.json
@@ -244,6 +256,15 @@ JASIST_submission_2/
 JASIST_submission_final/
 jasist-main.tex
 
+# EMNLP submission — contains author names/affiliations; exclude during anonymous review
+# Commit only after deanonymization (or use anonymous.4open.science mirror)
+EMNLP2026_submission/
+
+# Internal planning and design documents (not for external readers)
+EMNLP2026_PLAN.md
+DESIGN.md
+scientific-visualization-figure-design-1/
+
 # Scratch / one-off test scripts
 sglang_test.py
 test_reasoning_extraction.py
@@ -278,3 +299,8 @@ llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/*.qsf
 llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/iaa_report.json
 llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/iaa_v2_report.json
 llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/compute_iaa.py
+
+.omc
+
+# Literature review - internal working notes, not for external repo
+literature_review/
