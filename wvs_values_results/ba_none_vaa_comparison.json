@@ -1,0 +1,72 @@
+[
+  {
+    "label": "GPT-5.1",
+    "ba_none_vaa": 0.5844285069425417,
+    "ba_none_med": 0.5955123678863514,
+    "ba_user_vaa": 0.6129529672120229,
+    "delta": 0.02852446026948119,
+    "n_users": 1000,
+    "n_ba_none_runs": 20,
+    "consistency": "0/19 runs identical to first"
+  },
+  {
+    "label": "Qwen2.5-7B",
+    "ba_none_vaa": 0.5988726251867845,
+    "ba_none_med": 0.6167159841726728,
+    "ba_user_vaa": 0.5501566344120915,
+    "delta": -0.04871599077469302,
+    "n_users": 1000,
+    "n_ba_none_runs": 92,
+    "consistency": "0/91 runs identical to first"
+  },
+  {
+    "label": "Llama-3.1-8B",
+    "ba_none_vaa": 0.5101918227356804,
+    "ba_none_med": 0.5139170002924075,
+    "ba_user_vaa": 0.4941843555357866,
+    "delta": -0.01600746719989382,
+    "n_users": 999,
+    "n_ba_none_runs": 20,
+    "consistency": "0/19 runs identical to first"
+  },
+  {
+    "label": "Qwen2.5-72B",
+    "ba_none_vaa": 0.5580209451938954,
+    "ba_none_med": 0.5658500647678038,
+    "ba_user_vaa": 0.6171554281466389,
+    "delta": 0.05913448295274348,
+    "n_users": 1000,
+    "n_ba_none_runs": 20,
+    "consistency": "0/19 runs identical to first"
+  },
+  {
+    "label": "DeepSeek-V3",
+    "ba_none_vaa": 0.5473826862142045,
+    "ba_none_med": 0.5537782612340509,
+    "ba_user_vaa": 0.606006575287089,
+    "delta": 0.058623889072884516,
+    "n_users": 1000,
+    "n_ba_none_runs": 20,
+    "consistency": "0/19 runs identical to first"
+  },
+  {
+    "label": "QwQ-32B",
+    "ba_none_vaa": 0.3995465462672061,
+    "ba_none_med": 0.38784936815304344,
+    "ba_user_vaa": 0.6142961843230684,
+    "delta": 0.21474963805586234,
+    "n_users": 1000,
+    "n_ba_none_runs": 20,
+    "consistency": "0/19 runs identical to first"
+  },
+  {
+    "label": "Llama-3.1-70B",
+    "ba_none_vaa": 0.3355529184772419,
+    "ba_none_med": 0.31808311052998717,
+    "ba_user_vaa": 0.6046818462264518,
+    "delta": 0.26912892774920993,
+    "n_users": 1000,
+    "n_ba_none_runs": 20,
+    "consistency": "0/19 runs identical to first"
+  }
+]
