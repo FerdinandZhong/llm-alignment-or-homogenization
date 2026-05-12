@@ -129,12 +129,12 @@ The `wvs_values_results/` directory contains pre-computed outputs for all seven 
 
 | Model | None VAA | Homog. Rate | Permutation Results |
 |---|---|---|---|
-| GPT-5.1 | 0.584 | 81.4% | `gpt-5.1/permutation_test_results.json` |
+| GPT-5.1 | 0.584 | 80.8% | `gpt-5.1/permutation_test_results.json` |
 | QwQ-32B | 0.400 | 66.9% | `QwQ-32B/permutation_test_results.json` |
-| Qwen2.5-72B | 0.558 | — | `Qwen2.5-72B-Instruct/permutation_test_results.json` |
-| Llama-3.1-70B | 0.336 | — | `Llama-3.1-70B-Instruct/permutation_test_results.json` |
-| DeepSeek-V3 | 0.547 | — | `DeepSeek-V3/permutation_test_results.json` |
-| Qwen2.5-7B | 0.599 | — | `Qwen2.5-7B-Instruct/permutation_test_results.json` |
+| Qwen2.5-72B | 0.558 | 83.2% | `Qwen2.5-72B-Instruct/permutation_test_results.json` |
+| Llama-3.1-70B | 0.336 | 55.3% | `Llama-3.1-70B-Instruct/permutation_test_results.json` |
+| DeepSeek-V3 | 0.547 | 79.8% | `DeepSeek-V3/permutation_test_results.json` |
+| Qwen2.5-7B | 0.599 | 69.4% | `Qwen2.5-7B-Instruct/permutation_test_results.json` |
 | Llama-3.1-8B | 0.510 | 28.0% | `Llama-3.1-8B-Instruct/permutation_test_results.json` |
 
 ---
