@@ -14,6 +14,6 @@ llm_server: llm_platform
 verbose: 1
 storage_step: 5
 reasoning: false
-model_base_url: https://ai-gateway.dev.cloudops.cloudera.com
+model_base_url: https://api.openai.com/v1
 run_mode: anchored
 anchor_fold_count: 5
