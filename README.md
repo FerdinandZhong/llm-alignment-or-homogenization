@@ -1,6 +1,6 @@
 # Alignment by Stereotyping
 
-Code and data for the paper **"Alignment by Stereotyping: Demographic Profiles Raise LLM Accuracy Through Individual Homogenization"** (EMNLP 2026).
+Code and data for the paper **"Alignment by Stereotyping: Demographic Profiles Raise LLM Accuracy Through Individual Homogenization"**.
 
 ## Overview
 
@@ -119,7 +119,7 @@ Results are written to `wvs_values_results/<model>/permutation_test_results.json
 python scripts/generate_emnlp_figures.py
 ```
 
-Outputs all figures to `EMNLP2026_submission/figures/`.
+Outputs all figures to `figures/`.
 
 ---
 
