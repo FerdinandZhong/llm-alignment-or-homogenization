@@ -1,0 +1,124 @@
+{
+  "model": "Llama-3.1-70B-Instruct",
+  "results": {
+    "socioeconomic_status": {
+      "real_homogenization_rate": 0.4837696335078534,
+      "effect_size_z": 0.636805973087349,
+      "p_value": 0.2937062937062937,
+      "n_valid_users": 955,
+      "domains": [
+        "career",
+        "investment"
+      ]
+    },
+    "continent_of_residence": {
+      "real_homogenization_rate": 0.2845,
+      "effect_size_z": 1.0606186596760716,
+      "p_value": 0.23526473526473526,
+      "n_valid_users": 1000,
+      "domains": [
+        "career",
+        "investment"
+      ]
+    },
+    "highest_level_of_education": {
+      "real_homogenization_rate": 0.4155,
+      "effect_size_z": 1.612258838334224,
+      "p_value": 0.42207792207792205,
+      "n_valid_users": 1000,
+      "domains": [
+        "career",
+        "investment"
+      ]
+    },
+    "occupation_group": {
+      "real_homogenization_rate": 0.48880597014925375,
+      "effect_size_z": 1.633327505392899,
+      "p_value": 0.16133866133866134,
+      "n_valid_users": 938,
+      "domains": [
+        "career",
+        "investment"
+      ]
+    },
+    "immigration_status": {
+      "real_homogenization_rate": 0.49147442326980945,
+      "effect_size_z": 0.24387865866299385,
+      "p_value": 0.47352647352647353,
+      "n_valid_users": 997,
+      "domains": [
+        "career",
+        "investment"
+      ]
+    },
+    "age": {
+      "real_homogenization_rate": 0.4615,
+      "effect_size_z": 0.9243471726596382,
+      "p_value": 0.491008991008991,
+      "n_valid_users": 1000,
+      "domains": [
+        "career",
+        "investment"
+      ]
+    }
+  },
+  "summary": {
+    "mean_homog_rate": 0.4375916711544861,
+    "mean_z": 1.0185394679688626,
+    "sig_6": 0
+  },
+  "by_domain": {
+    "career": {
+      "age": {
+        "real_homogenization_rate": 0.397,
+        "effect_size_z": -1.9555795738646586
+      },
+      "continent_of_residence": {
+        "real_homogenization_rate": 0.249,
+        "effect_size_z": 0.20821375911113366
+      },
+      "immigration_status": {
+        "real_homogenization_rate": 0.43229689067201604,
+        "effect_size_z": -1.3552043959514974
+      },
+      "highest_level_of_education": {
+        "real_homogenization_rate": 0.359,
+        "effect_size_z": -0.9382288421517553
+      },
+      "socioeconomic_status": {
+        "real_homogenization_rate": 0.4397905759162304,
+        "effect_size_z": 0.18199986218946057
+      },
+      "occupation_group": {
+        "real_homogenization_rate": 0.44989339019189767,
+        "effect_size_z": 0.5038478018397243
+      }
+    },
+    "investment": {
+      "age": {
+        "real_homogenization_rate": 0.526,
+        "effect_size_z": 3.804273919183935
+      },
+      "continent_of_residence": {
+        "real_homogenization_rate": 0.32,
+        "effect_size_z": 1.9130235602410095
+      },
+      "immigration_status": {
+        "real_homogenization_rate": 0.5506519558676028,
+        "effect_size_z": 1.8429617132774851
+      },
+      "highest_level_of_education": {
+        "real_homogenization_rate": 0.472,
+        "effect_size_z": 4.162746518820203
+      },
+      "socioeconomic_status": {
+        "real_homogenization_rate": 0.5277486910994764,
+        "effect_size_z": 1.0916120839852375
+      },
+      "occupation_group": {
+        "real_homogenization_rate": 0.5277185501066098,
+        "effect_size_z": 2.762807208946074
+      }
+    }
+  }
+}
