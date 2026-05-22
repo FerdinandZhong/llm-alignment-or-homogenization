@@ -1,6 +1,6 @@
 # Alignment by Stereotyping
 
-Code and data for the paper **"Alignment by Stereotyping: Demographic Profiles Raise LLM Accuracy Through Individual Homogenization"**.
+Code and data for the paper **"Alignment by Stereotyping: How LLMs Sacrifice Individual Distinctiveness for Cultural Adaptation"**.
 
 ## Overview
 
