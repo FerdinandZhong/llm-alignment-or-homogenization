@@ -152,3 +152,9 @@ python scripts/convert_prism_to_pipeline.py
 ```
 
 Validation configs are in `values_prediction_configs/prism_validation/`.
+
+---
+
+## License
+
+Code is released under the [MIT License](LICENSE). The synthetic dialogue dataset and evaluation outputs are derived from [WVS Wave 7](https://www.worldvaluessurvey.org/) and [WorldValuesBench](https://arxiv.org/abs/2404.16019), both made available for academic research. Accordingly, all data artifacts in this repository are intended for **non-commercial research use only**.
