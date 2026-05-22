@@ -151,7 +151,7 @@ def main():
 
     rows = []
     for label, model_dir in MODELS.items():
-        none_dir = ROOT / "wvs_values_results" / model_dir / "BA_none_values_results"
+        none_dir = ROOT / "wvs_values_results" / model_dir / "none_values_results"
         jsonl_files = list(none_dir.glob("*.jsonl"))
         if not jsonl_files:
             print(f"[SKIP] {label}: no BA_none JSONL found in {none_dir}")

@@ -33,8 +33,8 @@ def extract_anchored(rows):
             out[uid] = per_user
     return out
 
-ba_user  = extract_ba_user(load_jsonl("wvs_values_results/gpt-5.1/BA_user_values_results/total_1000.jsonl"))
-anchored = extract_anchored(load_jsonl("wvs_values_results/gpt-5.1/BA_anchored_values_results/total_1000.jsonl"))
+ba_user  = extract_ba_user(load_jsonl("wvs_values_results/gpt-5.1/profile_values_results/total_1000.jsonl"))
+anchored = extract_anchored(load_jsonl("wvs_values_results/gpt-5.1/anchored_values_results/total_1000.jsonl"))
 
 gt = {}
 with open("datasets/wvs_benchmarks/sampled_values_df.csv") as f:
