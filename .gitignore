@@ -185,8 +185,12 @@ datasets/wvs_benchmarks/**
 datasets/wvs_generated_dialogues/**
 !datasets/wvs_generated_dialogues/investment_advice/all_samples.jsonl
 !datasets/wvs_generated_dialogues/career_advice/all_samples.jsonl
-# Allow values prediction configs
+# Allow values prediction configs for the 7 paper models only
 !llm_behavior_adaptation/value_measurement/values_prediction_configs/**
+llm_behavior_adaptation/value_measurement/values_prediction_configs/gpt-oss-20b/
+llm_behavior_adaptation/value_measurement/values_prediction_configs/gpt5-mini/
+llm_behavior_adaptation/value_measurement/values_prediction_configs/nemotron-3-nano-30b-a3b/
+llm_behavior_adaptation/value_measurement/values_prediction_configs/qwen3-30b-a3b-instruct/
 
 # WVS values results - keep only small summary files; host full JSONL on Zenodo/HuggingFace
 # BA_none total_1000.jsonl files are small (0.5-1.3 MB) and needed for BA_none analysis
@@ -203,8 +207,7 @@ wvs_values_results/*
 #   BA_user, BA_anchored, BA_dialogue, BA_translated_dialogue total_1000.jsonl
 #   wvs_values_results/gpt-5.1/experiments_results.json
 # career/ and investment/ subdirs contain dialogue results already tracked above via LFS
-# PRISM validation model outputs - no LFS tracking needed, exclude entirely
-wvs_values_results/prism_validation/
+# PRISM validation model outputs - tracked via Git LFS (total_80.jsonl)
 
 vsm_images/**/**2.json
 values_results/**/**2.json

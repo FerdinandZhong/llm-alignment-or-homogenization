@@ -13,7 +13,7 @@ values_results/ filter=lfs diff=lfs merge=lfs -text
 datasets/seed_dataset.csv filter=lfs diff=lfs merge=lfs -text
 datasets/generated_dialogues/generated_dialogues.jsonl filter=lfs diff=lfs merge=lfs -text
 wvs_values_results/**/total_1000.jsonl filter=lfs diff=lfs merge=lfs -text
-wvs_values_results/gpt-oss-20b-low/career/BA_dialogue_values_results/total_1000.jsonl filter=lfs diff=lfs merge=lfs -text
+wvs_values_results/prism_validation/**/total_80.jsonl filter=lfs diff=lfs merge=lfs -text
 wvs_values_results/**/results.jsonl filter=lfs diff=lfs merge=lfs -text
 wvs_values_results/**/BA_user_values_results/total_1000.jsonl filter=lfs diff=lfs merge=lfs -text
 wvs_values_results/**/BA_anchored_values_results/total_1000.jsonl filter=lfs diff=lfs merge=lfs -text
