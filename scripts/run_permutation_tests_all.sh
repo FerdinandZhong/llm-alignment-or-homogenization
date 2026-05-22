@@ -8,7 +8,7 @@ echo "=== Permutation Test: All Models ==="
 echo "Permutations: $NUM_PERMUTATIONS | Seed: $SEED"
 echo ""
 
-for results_file in wvs_values_results/*/BA_user_values_results/total_1000.jsonl; do
+for results_file in wvs_values_results/*/profile_values_results/total_1000.jsonl; do
     model_dir=$(dirname "$(dirname "$results_file")")
     model_name=$(basename "$model_dir")
     output_path="$model_dir/permutation_test_results.json"

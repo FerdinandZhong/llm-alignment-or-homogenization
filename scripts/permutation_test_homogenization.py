@@ -9,7 +9,7 @@ and Wang et al. (EMNLP 2024, "JobFair") for LLM demographic bias evaluation.
 
 Usage:
     python scripts/permutation_test_homogenization.py \
-        --ba-user-results wvs_values_results/Model/BA_user_values_results/total_1000.jsonl \
+        --ba-user-results wvs_values_results/Model/profile_values_results/total_1000.jsonl \
         --output-path wvs_values_results/Model/permutation_test_results.json \
         --num-permutations 10000 \
         --seed 42
