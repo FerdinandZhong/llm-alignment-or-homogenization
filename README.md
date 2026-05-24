@@ -30,13 +30,18 @@ Key findings:
 │   └── prism_validation/             # PRISM real-conversation validation data (CC BY 4.0)
 ├── llm_behavior_adaptation/
 │   ├── dialogue_dataset_creation/    # Dialogue generation pipeline
+│   │   ├── prompts/                  # Dialogue generation prompt templates
+│   │   └── dialogues_validation/     # Dialogue quality validation (LLM + human)
 │   └── value_measurement/            # Values prediction, metrics, and configs
 │       ├── prompts/                  # Prompt templates (no-profile, anchored)
 │       └── values_prediction_configs/  # Per-model YAML run configs
 ├── scripts/
 │   ├── permutation_test_homogenization.py  # Permutation test for homogenization rate
+│   ├── dialogue_permtest_per_domain.py     # Per-domain dialogue permutation tests
+│   ├── prism_density_correlation.py        # PRISM signal-density correlation analysis
 │   ├── analyze_anchored_gpt51.py           # Anchor experiment analysis (GPT-5.1)
 │   ├── compute_ba_none_vaa.py              # BA_none VAA computation across models
+│   ├── values_measures_compute_all_results.py  # Compute all alignment metrics
 │   ├── generate_emnlp_figures.py           # Figure generation (all paper figures)
 │   ├── convert_prism_to_pipeline.py        # PRISM → pipeline format conversion
 │   ├── run_permutation_tests_all.sh        # Run permutation tests for all models
@@ -49,6 +54,7 @@ Key findings:
 │   │   ├── career/ & investment/           # Dialogue condition outputs (LFS)
 │   │   ├── experiments_results.json        # Pre-computed alignment metrics
 │   │   └── permutation_test_results.json   # Permutation test z-scores and p-values
+│   ├── prism_validation/                   # PRISM model outputs (LFS)
 │   └── ba_none_vaa_comparison.json         # None-condition VAA across all models
 ├── requirements.txt
 └── setup.py
