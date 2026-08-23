@@ -41,20 +41,20 @@
   },
   {
     "label": "DeepSeek-V3",
-    "ba_none_vaa": 0.5473826862142045,
+    "ba_none_vaa": 0.5473826862142044,
     "ba_none_med": 0.5537782612340509,
     "ba_user_vaa": 0.606006575287089,
-    "delta": 0.058623889072884516,
+    "delta": 0.05862388907288463,
     "n_users": 1000,
     "n_ba_none_runs": 20,
     "consistency": "0/19 runs identical to first"
   },
   {
     "label": "QwQ-32B",
-    "ba_none_vaa": 0.3995465462672061,
-    "ba_none_med": 0.38784936815304344,
+    "ba_none_vaa": 0.39954654626720615,
+    "ba_none_med": 0.3878493681530435,
     "ba_user_vaa": 0.6142961843230684,
-    "delta": 0.21474963805586234,
+    "delta": 0.21474963805586228,
     "n_users": 1000,
     "n_ba_none_runs": 20,
     "consistency": "0/19 runs identical to first"

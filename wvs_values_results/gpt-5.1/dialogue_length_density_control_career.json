@@ -1,0 +1,24 @@
+{
+  "domain": "career",
+  "n_dialogues": 1000,
+  "by_turns": {
+    "1": {
+      "mean_demo_kw": 1.217,
+      "mean_user_words": 25.041,
+      "density": 0.04860029551535482,
+      "frac_of_full_demo": 0.7113744710482618
+    },
+    "3": {
+      "mean_demo_kw": 1.585,
+      "mean_user_words": 94.056,
+      "density": 0.01685166283915965,
+      "frac_of_full_demo": 0.8778402699662542
+    },
+    "5": {
+      "mean_demo_kw": 1.877,
+      "mean_user_words": 171.653,
+      "density": 0.010934851124070073,
+      "frac_of_full_demo": 1.0
+    }
+  }
+}

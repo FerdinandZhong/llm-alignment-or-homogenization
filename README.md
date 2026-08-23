@@ -45,6 +45,11 @@ Key findings:
 │   ├── generate_emnlp_figures.py           # Figure generation (all paper figures)
 │   ├── convert_prism_to_pipeline.py        # PRISM → pipeline format conversion
 │   ├── run_permutation_tests_all.sh        # Run permutation tests for all models
+│   ├── l2_baseline_robustness.py           # Human baseline robustness (canonical: 50.0%)
+│   ├── vaa_effect_size.py                  # Per-model Cohen's d and 95% bootstrap CIs
+│   ├── profile_run_to_run_gpt.py           # GPT-5.1 run-to-run variability measurement
+│   ├── question_subset_robustness.py       # Item-selection robustness (subsample + LOCO)
+│   ├── homog_rate_robustness.py            # Homogenization rate robustness checks
 │   └── human_validation/                   # PRISM validation study materials
 ├── wvs_values_results/
 │   ├── <ModelName>/

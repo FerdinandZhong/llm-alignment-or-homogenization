@@ -1,0 +1,17 @@
+{
+  "model": "gpt-5.1",
+  "n_users": 25,
+  "k_passes": 5,
+  "pass_vaas": [
+    0.6594,
+    0.6628,
+    0.6624,
+    0.6541,
+    0.6586
+  ],
+  "vaa_mean": 0.6595,
+  "vaa_sd_slice": 0.0035,
+  "vaa_range_slice": 0.0088,
+  "vaa_sd_extrapolated_n1000": 0.0006,
+  "note": "SD_1000 = SD_slice * sqrt(n_slice/1000); independent per-user decoding noise averages out."
+}
