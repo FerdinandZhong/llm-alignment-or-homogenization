@@ -303,7 +303,7 @@ def make_figure1():
 def make_figure2():
     fig, ax = plt.subplots(figsize=(5.2, 4.2))
 
-    human_baseline = 0.51
+    human_baseline = 0.50  # camera-ready: canonical L2 baseline (scripts/l2_baseline_robustness.py); was 0.51 (+1% offset dropped)
 
     # Distinct marker shape per model so the overlapping top cluster stays readable
     MARKERS = {
@@ -350,7 +350,7 @@ def make_figure2():
 
     # Human baseline
     ax.axhline(human_baseline, color="#444", linestyle="--", linewidth=1.0, alpha=0.7)
-    ax.text(0.478, human_baseline + 0.014, "Human baseline (51%)",
+    ax.text(0.478, human_baseline + 0.014, "Human baseline (50%)",
             fontsize=7.5, color="#444", va="bottom")
 
     # Trend line (excluding Llama-8B outlier)
@@ -561,7 +561,7 @@ CAT_SHORT = {
 def _build_q_cat_map():
     """Return {question_id: category_name} from the gpt-5.1 JSONL."""
     q_to_cat = {}
-    with open(ROOT / "wvs_values_results/gpt-5.1/BA_user_values_results/total_1000.jsonl") as f:
+    with open(ROOT / "wvs_values_results/gpt-5.1/profile_values_results/total_1000.jsonl") as f:
         entry = json.loads(f.readline())
     uid = list(entry.keys())[0]
     for cat, qs in entry[uid].items():
@@ -663,10 +663,10 @@ def make_figure6():
 
     # ── load model profiles ─────────────────────────────────────────────────
     gpt_profs   = _load_model_profiles(
-        ROOT / "wvs_values_results/gpt-5.1/BA_user_values_results/total_1000.jsonl",
+        ROOT / "wvs_values_results/gpt-5.1/profile_values_results/total_1000.jsonl",
         q_to_cat, categories)
     llama_profs = _load_model_profiles(
-        ROOT / "wvs_values_results/Llama-3.1-8B-Instruct/BA_user_values_results/total_1000.jsonl",
+        ROOT / "wvs_values_results/Llama-3.1-8B-Instruct/profile_values_results/total_1000.jsonl",
         q_to_cat, categories)
 
     # ── per-bin category-mean vectors (11-dim, normalised) ───────────────────

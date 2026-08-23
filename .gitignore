@@ -259,14 +259,26 @@ JASIST_submission_2/
 JASIST_submission_final/
 jasist-main.tex
 
-# EMNLP submission — contains author names/affiliations; exclude during anonymous review
-# Commit only after deanonymization (or use anonymous.4open.science mirror)
-EMNLP2026_submission/
+# EMNLP submission — unblocked for camera-ready (deanonymization required before committing)
+# EMNLP2026_submission/
 
 # Internal planning and design documents (not for external readers)
 EMNLP2026_PLAN.md
 DESIGN.md
 scientific-visualization-figure-design-1/
+
+# Internal rebuttal/camera-ready working documents (not for release)
+REBUTTAL_prep.md
+REBUTTAL_response_R1.md
+openreview_comments/
+docs/camera_ready_baseline_fix.md
+docs/rebuttal_work_summary.md
+docs/scam_adaptation_comparison_llama3.1-8b_vs_qwen3.md
+paper2_sycophancy_accent/
+
+# Internal diagnostic scripts (expose implementation details; not for release)
+scripts/baseline_gap_diagnosis.py
+scripts/none_run_to_run_variability.py
 
 # Qualtrics survey export files and internal operational markdown
 *.qsf
@@ -312,3 +324,5 @@ llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/compute_i
 
 # Literature review - internal working notes, not for external repo
 literature_review/
+# submission-internal (reviews, rebuttals, cross-venue letters) — never release
+EMNLP2026_submission/_private/

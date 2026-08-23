@@ -1,5 +1,15 @@
 """
-Human Resampling Baseline Analysis
+Human Resampling Baseline Analysis — GROUP-vs-GLOBAL DIAGNOSTIC ONLY.
+
+⚠️ DO NOT USE FOR THE TABLE 3 / PAPER BASELINE. ⚠️
+This script uses EMD distance and a group-vs-global centroid comparison
+(I(d_to_group < d_to_global)). That is NOT the Table 3 homogenization metric,
+which uses L2 distance and the own-ground-truth comparison
+I(||S_u^model - S_g^human|| < ||S_u^human - S_g^human||).
+
+For the canonical paper baseline (50.0%, camera-ready), use
+`scripts/l2_baseline_robustness.py`. This file is retained only as a
+group-vs-global clustering diagnostic and is kept for transparency.
 
 This script computes the natural homogenization rate in human data itself,
 establishing a baseline for how much humans naturally cluster toward their
@@ -329,6 +339,11 @@ def main() -> None:
         help="Disable progress bars",
     )
     args = parser.parse_args()
+
+    logger.warning(
+        "This script uses EMD + group-vs-global centroid and is NOT the Table 3 metric. "
+        "For the canonical paper baseline (50.0%%), use scripts/l2_baseline_robustness.py."
+    )
 
     user_profile = pd.read_csv(args.user_profile_dataset)
     user_value = pd.read_csv(args.user_value_dataset)

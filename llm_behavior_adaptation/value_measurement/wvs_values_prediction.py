@@ -124,12 +124,19 @@ class ValuesPredictionController:
         print(f"reasoning: {reasoning}")
 
         # --- client selection ---
+        # timeout/retries: reasoning models (e.g. GPT-5.1) are slow and the API
+        # has occasional slow windows; a short default timeout aborts whole runs.
+        _timeout = float(os.getenv("llm_request_timeout", "180"))
+        _max_retries = int(os.getenv("llm_max_retries", "5"))
         if openai_client is None:
             if "gpt" in evaluated_model:
-                self._openai_client = AsyncOpenAI(api_key=os.environ["api_key"])
+                self._openai_client = AsyncOpenAI(
+                    api_key=os.environ["api_key"], timeout=_timeout, max_retries=_max_retries)
             else:
                 base_url = os.getenv("base_url", "http://localhost:8000/v1")
-                self._openai_client = AsyncOpenAI(api_key=os.environ["api_key"], base_url=base_url)
+                self._openai_client = AsyncOpenAI(
+                    api_key=os.environ["api_key"], base_url=base_url,
+                    timeout=_timeout, max_retries=_max_retries)
         else:
             self._openai_client = openai_client
 
