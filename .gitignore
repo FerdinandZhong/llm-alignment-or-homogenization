@@ -330,3 +330,7 @@ JASIST_submission_final/
 
 # local working notes — do not commit
 HANDOFF.md
+
+# purged from history 2026-08-27, kept local-only
+wvs_generated_dialogues/translated_dialogues/
+wvs_values_results/*/*/individual_vs_group_analysis/alignment_full.jsonl
