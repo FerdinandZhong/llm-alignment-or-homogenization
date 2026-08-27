@@ -18,6 +18,7 @@ Key findings:
 1. Profile conditioning raises group-level alignment accuracy but homogenizes ~80–93% of individuals toward their demographic group centroid
 2. Scaling amplifies this trade-off within model families — larger models homogenize more
 3. Dialogue history partially reverses homogenization, suggesting richer individual context reduces demographic stereotyping
+4. A dialogue-length ablation (K=1/3/5 turns) across three models reveals model-dependent de-homogenization profiles: a threshold (GPT-5.1), a gradient (DeepSeek-V3), and persistence even at five turns (Qwen2.5-72B)
 
 ---
 
@@ -50,22 +51,27 @@ Key findings:
 │   ├── profile_run_to_run_gpt.py           # GPT-5.1 run-to-run variability measurement
 │   ├── question_subset_robustness.py       # Item-selection robustness (subsample + LOCO)
 │   ├── homog_rate_robustness.py            # Homogenization rate robustness checks
+│   ├── dialogue_length_ablation_setup.py   # Build K=1/3 dialogue-truncation configs
+│   ├── dialogue_length_ablation_analyze.py # Per-K homogenization rate + bootstrap CIs
+│   ├── dialogue_length_density_control.py  # Demographic-density control for the ablation
+│   ├── run_with_resume.sh                  # Auto-resume wrapper for long inference runs
 │   └── human_validation/                   # PRISM validation study materials
 ├── wvs_values_results/
 │   ├── <ModelName>/
-│   │   ├── BA_none_values_results/         # None condition outputs
-│   │   ├── BA_user_values_results/         # Profile condition outputs (LFS)
-│   │   ├── BA_anchored_values_results/     # Anchor experiment outputs (LFS)
-│   │   ├── career/ & investment/           # Dialogue condition outputs (LFS)
+│   │   ├── none_values_results/            # None condition outputs (total_20.jsonl)
+│   │   ├── profile_values_results/         # Profile condition outputs (total_1000.jsonl, LFS)
+│   │   ├── career/ & investment/           # Dialogue outputs (total_1000.jsonl, LFS)
+│   │   │   └── dialogue_turns{1,3}_values_results/  # K=1/3 truncations for the ablation
 │   │   ├── experiments_results.json        # Pre-computed alignment metrics
-│   │   └── permutation_test_results.json   # Permutation test z-scores and p-values
+│   │   ├── permutation_test_results.json   # Permutation test z-scores and p-values
+│   │   └── dialogue_length_ablation_career.json    # Dialogue-length ablation (K=1,3,5)
 │   ├── prism_validation/                   # PRISM model outputs (LFS)
 │   └── ba_none_vaa_comparison.json         # None-condition VAA across all models
 ├── requirements.txt
 └── setup.py
 ```
 
-> **Large result files** (BA_user, BA_dialogue, BA_anchored `total_1000.jsonl` and GPT-5.1 `experiments_results.json`) are tracked with Git LFS.
+> **Large result files** (profile and dialogue `total_1000.jsonl` outputs, and GPT-5.1 `experiments_results.json`) are tracked with Git LFS.
 
 ---
 
@@ -104,9 +110,9 @@ Configs are provided for all seven models across all conditions. Each YAML speci
 python -m llm_behavior_adaptation.value_measurement.wvs_values_comparison \
     --user-profile-dataset datasets/wvs_benchmarks/sampled_demographic_features.csv \
     --user-value-dataset datasets/wvs_benchmarks/sampled_values_df.csv \
-    --ba-user-results <path/to/BA_user_values_results/total_1000.jsonl> \
-    --ba-dialogue-career-results <path/to/career/BA_dialogue_values_results/total_1000.jsonl> \
-    --ba-dialogue-investment-results <path/to/investment/BA_dialogue_values_results/total_1000.jsonl> \
+    --ba-user-results <path/to/profile_values_results/total_1000.jsonl> \
+    --ba-dialogue-career-results <path/to/career/dialogue_values_results/total_1000.jsonl> \
+    --ba-dialogue-investment-results <path/to/investment/dialogue_values_results/total_1000.jsonl> \
     --results-output-path <path/to/experiments_results.json>
 ```
 
@@ -168,4 +174,4 @@ Validation configs are in `values_prediction_configs/prism_validation/`.
 
 ## License
 
-Code is released under the [MIT License](LICENSE). The synthetic dialogue dataset and evaluation outputs are derived from [WVS Wave 7](https://www.worldvaluessurvey.org/) and [WorldValuesBench](https://arxiv.org/abs/2404.16019), both made available for academic research. Accordingly, all data artifacts in this repository are intended for **non-commercial research use only**.
+Code is released under the [MIT License](LICENSE). The synthetic dialogue dataset and evaluation outputs are derived from [WVS Wave 7](https://www.worldvaluessurvey.org/) and [WorldValuesBench](https://aclanthology.org/2024.lrec-main.1539/), both made available for academic research. Accordingly, all data artifacts in this repository are intended for **non-commercial research use only**.
