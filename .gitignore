@@ -324,8 +324,9 @@ llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/compute_i
 
 # Literature review - internal working notes, not for external repo
 literature_review/
-# submission-internal (reviews, rebuttals, cross-venue letters) — never release
-EMNLP2026_submission/_private/
+# paper sources kept out of the public code repo (live on Overleaf)
+EMNLP2026_submission/
+JASIST_submission_final/
 
 # local working notes — do not commit
 HANDOFF.md
