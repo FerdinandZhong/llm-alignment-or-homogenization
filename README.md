@@ -26,7 +26,7 @@ Key findings:
 
 ```
 ├── datasets/
-│   ├── wvs_benchmarks/               # Seed demographic profiles and WVS questions
+│   ├── wvs_benchmarks/               # WVS question metadata (respondent-level WVS data not redistributed — see License)
 │   ├── wvs_generated_dialogues/      # Synthetic dialogues (career & investment advice)
 │   └── prism_validation/             # PRISM real-conversation validation data (CC BY 4.0)
 ├── llm_behavior_adaptation/
@@ -106,6 +106,8 @@ Configs are provided for all seven models across all conditions. Each YAML speci
 
 ### Step 2: Compute alignment metrics
 
+> **Note:** `sampled_demographic_features.csv` and `sampled_values_df.csv` contain individual-level WVS Wave 7 responses, which the WVS conditions of use prohibit redistributing, so they are **not** included in this repository. WVS Wave 7 is available directly from the [WVS website](https://www.worldvaluessurvey.org/) (free for academic use after registration); the specific 1,000-respondent sample used in our experiments is available from the authors on request.
+
 ```bash
 python -m llm_behavior_adaptation.value_measurement.wvs_values_comparison \
     --user-profile-dataset datasets/wvs_benchmarks/sampled_demographic_features.csv \
@@ -175,3 +177,5 @@ Validation configs are in `values_prediction_configs/prism_validation/`.
 ## License
 
 Code is released under the [MIT License](LICENSE). The synthetic dialogue dataset and evaluation outputs are derived from [WVS Wave 7](https://www.worldvaluessurvey.org/) and [WorldValuesBench](https://aclanthology.org/2024.lrec-main.1539/), both made available for academic research. Accordingly, all data artifacts in this repository are intended for **non-commercial research use only**.
+
+Individual-level WVS respondent data (`sampled_demographic_features.csv`, `sampled_values_df.csv`) is **not redistributed** in this repository, in keeping with the WVS conditions of use. Obtain WVS Wave 7 directly from the [WVS website](https://www.worldvaluessurvey.org/); the exact 1,000-respondent sample used in our experiments is available from the authors on request.
