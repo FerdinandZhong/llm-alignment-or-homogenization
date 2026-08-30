@@ -15,7 +15,7 @@ We evaluate seven LLMs across three conditions:
 | **Dialogue** | Multi-turn conversation history replacing the profile label |
 
 Key findings:
-1. Profile conditioning raises group-level alignment accuracy but homogenizes ~80–93% of individuals toward their demographic group centroid
+1. Profile conditioning raises group-level alignment accuracy but homogenizes a majority of individuals toward their demographic group centroid (55–83% across the five permutation-certified models, up to 83.2% under Profile)
 2. Scaling amplifies this trade-off within model families — larger models homogenize more
 3. Dialogue history partially reverses homogenization, suggesting richer individual context reduces demographic stereotyping
 4. A dialogue-length ablation (K=1/3/5 turns) across three models reveals model-dependent de-homogenization profiles: a threshold (GPT-5.1), a gradient (DeepSeek-V3), and persistence even at five turns (Qwen2.5-72B)
