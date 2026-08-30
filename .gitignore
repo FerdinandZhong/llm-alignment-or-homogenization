@@ -185,14 +185,29 @@ datasets/wvs_benchmarks/**
 datasets/wvs_generated_dialogues/**
 !datasets/wvs_generated_dialogues/investment_advice/all_samples.jsonl
 !datasets/wvs_generated_dialogues/career_advice/all_samples.jsonl
-# Allow values prediction configs
+# Allow values prediction configs for the 7 paper models only
 !llm_behavior_adaptation/value_measurement/values_prediction_configs/**
+llm_behavior_adaptation/value_measurement/values_prediction_configs/gpt-oss-20b/
+llm_behavior_adaptation/value_measurement/values_prediction_configs/gpt5-mini/
+llm_behavior_adaptation/value_measurement/values_prediction_configs/nemotron-3-nano-30b-a3b/
+llm_behavior_adaptation/value_measurement/values_prediction_configs/qwen3-30b-a3b-instruct/
 
-# WVS values results - only keep total_1000.jsonl and experiments_results.json
+# WVS values results - keep only small summary files; host full JSONL on Zenodo/HuggingFace
+# BA_none total_1000.jsonl files are small (0.5-1.3 MB) and needed for BA_none analysis
+# BA_user/BA_anchored/BA_dialogue total_1000.jsonl can be up to 168 MB (QwQ-32B) - host externally
 wvs_values_results/*
 !wvs_values_results/**/
-!wvs_values_results/**/total_1000.jsonl
-!wvs_values_results/**/experiments_results.json
+!wvs_values_results/ba_none_vaa_comparison.json
+!wvs_values_results/**/permutation_test_results.json
+!wvs_values_results/**/BA_none_values_results/
+!wvs_values_results/**/BA_none_values_results/total_1000.jsonl
+# experiments_results.json for gpt-5.1 is 89 MB - tracked by LFS (see .gitattributes)
+# All other models' experiments_results.json are ~200 KB and committed as regular git objects
+# Large inference outputs tracked by Git LFS (see .gitattributes):
+#   BA_user, BA_anchored, BA_dialogue, BA_translated_dialogue total_1000.jsonl
+#   wvs_values_results/gpt-5.1/experiments_results.json
+# career/ and investment/ subdirs contain dialogue results already tracked above via LFS
+# PRISM validation model outputs - tracked via Git LFS (total_80.jsonl)
 
 vsm_images/**/**2.json
 values_results/**/**2.json
@@ -244,6 +259,32 @@ JASIST_submission_2/
 JASIST_submission_final/
 jasist-main.tex
 
+# EMNLP submission — unblocked for camera-ready (deanonymization required before committing)
+# EMNLP2026_submission/
+
+# Internal planning and design documents (not for external readers)
+EMNLP2026_PLAN.md
+DESIGN.md
+scientific-visualization-figure-design-1/
+
+# Internal rebuttal/camera-ready working documents (not for release)
+REBUTTAL_prep.md
+REBUTTAL_response_R1.md
+openreview_comments/
+docs/camera_ready_baseline_fix.md
+docs/rebuttal_work_summary.md
+docs/scam_adaptation_comparison_llama3.1-8b_vs_qwen3.md
+paper2_sycophancy_accent/
+
+# Internal diagnostic scripts (expose implementation details; not for release)
+scripts/baseline_gap_diagnosis.py
+scripts/none_run_to_run_variability.py
+
+# Qualtrics survey export files and internal operational markdown
+*.qsf
+scripts/human_validation/LAUNCH_CHECKLIST.md
+scripts/human_validation/study_materials.md
+
 # Scratch / one-off test scripts
 sglang_test.py
 test_reasoning_extraction.py
@@ -278,3 +319,18 @@ llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/*.qsf
 llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/iaa_report.json
 llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/iaa_v2_report.json
 llm_behavior_adaptation/dialogue_dataset_creation/dialogues_validation/compute_iaa.py
+
+.omc
+
+# Literature review - internal working notes, not for external repo
+literature_review/
+# paper sources kept out of the public code repo (live on Overleaf)
+EMNLP2026_submission/
+JASIST_submission_final/
+
+# local working notes — do not commit
+HANDOFF.md
+
+# purged from history 2026-08-27, kept local-only
+wvs_generated_dialogues/translated_dialogues/
+wvs_values_results/*/*/individual_vs_group_analysis/alignment_full.jsonl
