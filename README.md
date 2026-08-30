@@ -108,6 +108,8 @@ python -m llm_behavior_adaptation.value_measurement.wvs_values_prediction \
 
 #### Group-level alignment accuracy
 
+> **Note:** `sampled_demographic_features.csv` and `sampled_values_df.csv` contain individual-level WVS Wave 7 responses, which the WVS conditions of use prohibit redistributing, so they are **not** included in this repository. WVS Wave 7 is available directly from the [WVS website](https://www.worldvaluessurvey.org/) (free for academic use after registration); the specific 1,000-respondent sample used in our experiments is available from the authors on request.
+
 ```bash
 python -m llm_behavior_adaptation.value_measurement.wvs_values_comparison \
     --user-profile-dataset datasets/wvs_benchmarks/sampled_demographic_features.csv \

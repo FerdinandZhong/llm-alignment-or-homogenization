@@ -180,8 +180,8 @@ datasets/**.json
 single_selection_outputs/**
 results_jsons/**
 datasets/wvs_benchmarks/**
-!datasets/wvs_benchmarks/sampled_demographic_features.csv
-!datasets/wvs_benchmarks/sampled_values_df.csv
+# Respondent-level WVS Wave 7 data (sampled_demographic_features.csv, sampled_values_df.csv)
+# is NOT redistributed here per WVS conditions of use — kept local-only, obtain WVS directly.
 datasets/wvs_generated_dialogues/**
 !datasets/wvs_generated_dialogues/investment_advice/all_samples.jsonl
 !datasets/wvs_generated_dialogues/career_advice/all_samples.jsonl
